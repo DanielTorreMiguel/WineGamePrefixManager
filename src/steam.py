@@ -19,16 +19,17 @@ applist
 def getGameList():
     data = urllib.request.urlopen(url).read()
     output = json.loads(data)
+    saveToJson(output, "fullList.json")
     return output
 
 '''
 generates a list with initialised wine games from steam
 @param folder steamapps folder to scan
 '''
-def populateGameList(folder, fullGameList):
-    gameDataList = {} #list with initialised wine games
-    numElements = 0 #number of list elements
-    prefixFolder = folder + "compatdata" #folder which 
+def populateGameList(folder):
+    fullGameList = getGameList()
+    gameDataList = [] #list with initialised wine games
+    prefixFolder = folder + "/compatdata" #folder which 
     directories = os.listdir(prefixFolder) #get all the folders in the wine 
     for item in fullGameList["applist"]["apps"]:
         for directory in directories:
@@ -37,10 +38,10 @@ def populateGameList(folder, fullGameList):
                 gameDict['prefixFolder'] = prefixFolder+"/"+directory #wine prefix folder
                 gameDict["name"] = item["name"] #game name
                 gameDict["appid"] = item["appid"]# game steam id
-                gameDataList[numElements] = gameDict
-                numElements+=1
+                gameDataList.append(gameDict)
                 directories.remove(directory) #remove it to reduce complexity
     saveToJson(gameDataList, "installed.json")
+    return gameDataList
     
 '''
 saves dictonary to file in json format
