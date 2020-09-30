@@ -1,7 +1,3 @@
-build: gui.py
-	echo "build test"
-gui.py: GUI/gui.ui
-	mkdir -p build
-	pyuic5 GUI/gui.ui -x -o build/gui.py
-clean:
-	rm -rf build
+build: GUI/gui.ui
+	pyuic5 GUI/gui.ui -o gui.py
+	pyuic5 GUI/foldersDialog.ui -o foldersDialog.py
