@@ -3,7 +3,7 @@ import sys
 import os
 import json
 from PyQt5 import Qt, QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QListWidget
 
 class addFolderDialog(object):
 
@@ -38,10 +38,17 @@ class addFolderDialog(object):
     def addFolderButtonPressed(self):
         folderPath = QFileDialog.getExistingDirectory(None, "select steamapps directory")
         self._addToFolderList(folderPath)       
+        self._setErrorLabel("Folder added correctly")
    
     def removeFolderButtonPressed(self):
-        #TODO remove folder from list
-        pass
+        if len(self.ui.folderList.selectedItems()) == 0:
+            self._setErrorLabel("No items were selected")
+        else:
+            for i in range(self.ui.folderList.count()):
+                if(self.ui.folderList.item(i).isSelected()):
+                    self.ui.folderList.takeItem(i)
+                    self._setErrorLabel("Item deleted sucessfully")
+                    return
 
     def populateFolderList(self):
         if os.path.isfile('folderList.json'): #if file exists
@@ -62,3 +69,6 @@ class addFolderDialog(object):
             folderList.append(field)
         with open("folderList.json", 'w', encoding='utf-8') as f:
             json.dump(folderList, f, ensure_ascii=False, indent=4)
+
+    def _setErrorLabel(self, text):
+        self.ui.errorLabel.setText(text)
