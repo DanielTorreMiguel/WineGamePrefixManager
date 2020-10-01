@@ -4,6 +4,7 @@ import steam as st
 import os
 import subprocess
 import addFolderDialog as adf
+import openSettingsDialog as osd
 import jsonWrapper as jw
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidgetItem
@@ -28,7 +29,7 @@ class mainWindow(object):
         self.ui.gameTable.itemClicked.connect(self.onItemActivated) #when a row is clicked
         self.ui.launchButton.pressed.connect(self.launchGameButtonPressed)
         self.ui.winetricksButton.pressed.connect(self.winetricksButtonPressed)
-
+        self.ui.settingsButton.pressed.connect(self.settingsButtonPressed)
 
     def scanButtonPressed(self):
         self.gameList = []
@@ -62,7 +63,8 @@ class mainWindow(object):
 
 
     def settingsButtonPressed(self):
-        #TODO open dialog with settings
+        dialog = osd.openSettingsDialog()
+        dialog.openDialog()
         pass
     
     def launchGameButtonPressed(self):

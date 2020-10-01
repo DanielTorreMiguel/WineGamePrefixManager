@@ -60,7 +60,7 @@
            </widget>
           </item>
           <item>
-           <widget class="KLineEdit" name="wineTricksPath"/>
+           <widget class="QLineEdit" name="lineEdit"/>
           </item>
           <item>
            <widget class="QPushButton" name="winetricksSearch">
@@ -116,7 +116,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KLineEdit" name="klineedit"/>
+         <widget class="QLineEdit" name="wineLine"/>
         </item>
         <item>
          <widget class="QPushButton" name="wineSearch">
@@ -176,13 +176,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
