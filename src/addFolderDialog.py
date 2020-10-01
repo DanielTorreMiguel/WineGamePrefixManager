@@ -1,7 +1,8 @@
 import foldersDialog as fd
 import sys
 import os
-import json
+import jsonWrapper as jw
+import steam as st
 from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QListWidget
 
@@ -52,8 +53,7 @@ class addFolderDialog(object):
 
     def populateFolderList(self):
         if os.path.isfile('folderList.json'): #if file exists
-            with open('folderList.json') as json_file:
-                data = json.load(json_file)
+            data = jw.openJson('folderList.json')
             for item in data:
                 self._addToFolderList(item["path"])
         return
@@ -67,8 +67,7 @@ class addFolderDialog(object):
             field = {}
             field["path"] = self.ui.folderList.item(index).text()
             folderList.append(field)
-        with open("folderList.json", 'w', encoding='utf-8') as f:
-            json.dump(folderList, f, ensure_ascii=False, indent=4)
+        jw.saveToJson(folderList,"folderList.json")
 
     def _setErrorLabel(self, text):
         self.ui.errorLabel.setText(text)
