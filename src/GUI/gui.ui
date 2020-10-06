@@ -63,10 +63,10 @@
                <bool>true</bool>
               </property>
               <property name="rowCount">
-               <number>1</number>
+               <number>0</number>
               </property>
               <property name="columnCount">
-               <number>2</number>
+               <number>1</number>
               </property>
               <attribute name="horizontalHeaderVisible">
                <bool>false</bool>
@@ -80,6 +80,9 @@
               <attribute name="horizontalHeaderDefaultSectionSize">
                <number>200</number>
               </attribute>
+              <attribute name="horizontalHeaderHighlightSections">
+               <bool>true</bool>
+              </attribute>
               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                <bool>false</bool>
               </attribute>
@@ -92,8 +95,6 @@
               <attribute name="verticalHeaderHighlightSections">
                <bool>false</bool>
               </attribute>
-              <row/>
-              <column/>
               <column/>
              </widget>
             </item>

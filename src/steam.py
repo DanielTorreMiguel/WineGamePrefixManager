@@ -30,22 +30,24 @@ generates a list with initialised wine games from steam
 def populateGameList(folders):
     fullGameList = getGameList()
     gameDataList = [] #list with initialised wine games
-    print(folders)
+    gameDataListFull = []
     for folder in folders:
-        prefixFolder = folder["path"] + "/compatdata" #folder which 
+        prefixFolder = folder["path"] + "/compatdata" #folder where the prefixes are
         if os.path.isdir(prefixFolder):
-            directories = os.listdir(prefixFolder) #get all the folders in the wine 
-            for item in fullGameList["applist"]["apps"]:
-                for directory in directories:
-                    if item["appid"] == int(directory):
-                        gameDict = {}
-                        gameDict['prefixFolder'] = prefixFolder+"/"+directory #wine prefix folder
-                        gameDict["name"] = item["name"] #game name
-                        gameDict["appid"] = item["appid"]# game steam id
-                        gameDataList.append(gameDict)
-                        directories.remove(directory) #remove it to reduce complexity
-    jw.saveToJson(gameDataList, "gameList.json")
-    return gameDataList
+            directories = os.listdir(prefixFolder) #get all the prefix folders
+            for directory in directories:
+                gameDict = {}
+                gameDict['prefixFolder'] = prefixFolder+"/"+directory #wine prefix folder
+                gameDict["name"] = "placeholder" #game name
+                gameDict["appid"] = int(directory) # game steam id
+                gameDataList.append(gameDict)
+    for item in fullGameList["applist"]["apps"]:
+        for app in gameDataList:
+            if item["appid"] == app["appid"]:
+                app["name"] = item["name"]
+                gameDataList.remove(app)
+                gameDataListFull.append(app)
+    return gameDataListFull
     
 
 
@@ -57,6 +59,6 @@ def loadGameList():
         if os.path.isfile('folderList.json'): #if file exists
             data = jw.openJson('folderList.json')
             gameList = populateGameList(data)
-            jw.saveToJson(data, "folderList.json")
+            jw.saveToJson(gameList, "gameList.json")
     return gameList
 
